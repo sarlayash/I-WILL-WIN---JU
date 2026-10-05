@@ -45,7 +45,7 @@ export const EventHighlights: React.FC = () => {
               I WILL WIN · 12 HOURS HACKATHON
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Conducted at <strong className="text-slate-300">JIET Group Of Universe</strong> · Oct 1 to Oct 2, 2026
+              Conducted at <strong className="text-slate-300">JIET Group of Institutions, Jodhpur</strong> · Oct 1 to Oct 2, 2026
             </p>
           </div>
 

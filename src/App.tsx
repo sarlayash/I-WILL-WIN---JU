@@ -114,7 +114,7 @@ export default function App() {
             <span>I WILL WIN · 12 HOURS HACKATHON · 56 MINDS · 1 MISSION</span>
           </div>
           <p className="text-slate-400">
-            Conducted on October 1–2, 2026 at <span className="text-slate-300">JIET Group Of Universe</span> · <span className="text-amber-300 font-semibold">Powered By Kapil</span> · <span className="text-slate-300">Co-Powered By JIET Universe</span>.
+            Conducted on October 1–2, 2026 at <span className="text-slate-300">JIET Group of Institutions, Jodhpur</span> · <span className="text-amber-300 font-semibold">Powered By Kapil</span> · <span className="text-slate-300">Co-Powered By JIET Universe</span>.
           </p>
           <div className="text-[11px] font-mono-code text-slate-500 pt-2 flex items-center justify-center gap-3 flex-wrap">
             <span>STRICT 56 MINDS WHITELIST</span>

@@ -213,9 +213,9 @@ export async function renderCertificateToCanvas(
   // Institution title
   ctx.textAlign = 'center';
   ctx.fillStyle = isDark ? '#E5E7EB' : '#1E293B';
-  ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-  ctx.letterSpacing = '6px';
-  ctx.fillText('JIET GROUP OF UNIVERSE', width / 2, 255);
+  ctx.font = '700 24px "Plus Jakarta Sans", sans-serif';
+  ctx.letterSpacing = '5px';
+  ctx.fillText('JIET GROUP OF INSTITUTIONS, JODHPUR', width / 2, 255);
 
   ctx.fillStyle = isDark ? '#F59E0B' : '#B45309';
   ctx.font = '600 17px "Plus Jakarta Sans", sans-serif';
@@ -315,7 +315,7 @@ export async function renderCertificateToCanvas(
   const textLine2 =
     'during the high-intensity 12-Hour Non-Stop Hackathon conducted from October 1 to October 2, 2026.';
   const textLine3 =
-    'Recognized among the exclusive cohort of 56 minds united in one mission to Build in Public at JIET Group of Universe.';
+    'Recognized among the exclusive cohort of 56 minds united in one mission to Build in Public at JIET Group of Institutions, Jodhpur.';
   
   ctx.fillText(textLine1, width / 2, 785);
   ctx.fillText(textLine2, width / 2, 825);

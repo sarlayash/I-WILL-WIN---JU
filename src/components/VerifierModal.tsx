@@ -123,7 +123,7 @@ export const VerifierModal: React.FC<VerifierModalProps> = ({
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                 <div>
                   <div className="text-slate-500 text-[11px]">VENUE</div>
-                  <div className="font-semibold text-slate-200">JIET Group Of Universe</div>
+                  <div className="font-semibold text-slate-200">JIET Group of Institutions, Jodhpur</div>
                 </div>
               </div>
 

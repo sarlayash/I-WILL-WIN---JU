@@ -17,10 +17,10 @@ export const HACKATHON_DETAILS = {
   fullEventTitle: "I WILL WIN | 12 HOURS HACKATHON | 56 MINDS | 1 MISSION | BUILD IN PUBLIC",
   certificateTitle: "CERTIFICATE OF APPRECIATION",
   dates: "Oct 1 to Oct 2, 2026",
-  venue: "JIET Group Of Universe",
+  venue: "JIET Group Of Institutions, Jodhpur",
   poweredBy: "Powered By Kapil Co-Powered By JIET Universe",
   architect: "Kapil",
-  institution: "JIET Universe",
+  institution: "JIET Group Of Institutions, Jodhpur",
   totalMinds: 56,
 };
 
