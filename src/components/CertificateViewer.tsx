@@ -5,6 +5,7 @@ import {
   renderCertificateToCanvas,
   downloadPNGFromCanvas,
   downloadPDFFromCanvas,
+  getPublicVerificationUrl,
   CertificateTheme,
   THEMES,
 } from '../utils/certificateGenerator';
@@ -25,7 +26,7 @@ export const CertificateViewer: React.FC<CertificateViewerProps> = ({
   const [copiedLink, setCopiedLink] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
 
-  const verificationUrl = `${window.location.origin}${window.location.pathname}?verify=${participant.id}`;
+  const verificationUrl = getPublicVerificationUrl(participant.id);
 
   // Confetti on mount/participant change
   useEffect(() => {

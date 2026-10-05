@@ -13,6 +13,7 @@ export default function App() {
   // Default to first participant (Keshav Gaur) so the certificate is immediately visible as an example
   const [selectedParticipant, setSelectedParticipant] = useState<Participant | null>(PARTICIPANTS[0]);
   const [urlVerifyId, setUrlVerifyId] = useState<string>('');
+  const [scannedParticipant, setScannedParticipant] = useState<Participant | null>(null);
 
   // Handle URL query parameters (?verify=ID or ?name=Name)
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function App() {
         const match = getParticipantById(verifyParam);
         if (match) {
           setSelectedParticipant(match);
+          setScannedParticipant(match);
           setActiveTab('claim');
         } else {
           setActiveTab('verify');
@@ -69,6 +71,47 @@ export default function App() {
         
         {activeTab === 'claim' && (
           <div className="space-y-6">
+            {/* Mobile-Friendly Scanned QR Code Alert */}
+            {scannedParticipant && (
+              <div className="max-w-4xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 border-2 border-emerald-500/60 shadow-2xl shadow-emerald-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fadeIn">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-6 h-6 text-emerald-400" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono-code text-emerald-400 font-semibold tracking-wider flex items-center gap-1.5">
+                      <span>✓ OFFICIAL QR SCAN VERIFIED</span>
+                      <span className="text-slate-500">·</span>
+                      <span className="text-slate-400">{scannedParticipant.id}</span>
+                    </div>
+                    <div className="text-base sm:text-lg font-bold text-slate-100 font-cinzel">
+                      {scannedParticipant.name}
+                    </div>
+                    <div className="text-xs text-slate-300">
+                      JIET Group of Institutions, Jodhpur · Powered By Kapil Co-Powered By JIET Universe
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <button
+                    onClick={() => {
+                      setUrlVerifyId(scannedParticipant.id);
+                      setActiveTab('verify');
+                    }}
+                    className="flex-1 sm:flex-none px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-semibold rounded-xl transition-all cursor-pointer text-center"
+                  >
+                    View Audit Ledger
+                  </button>
+                  <button
+                    onClick={() => setScannedParticipant(null)}
+                    className="p-2 text-slate-400 hover:text-slate-200 text-xs cursor-pointer"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Search and Whitelist Verification Input */}
             <SearchClaimBox
               onSelectParticipant={handleSelectParticipant}
