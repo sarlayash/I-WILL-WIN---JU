@@ -1,6 +1,7 @@
 import QRCode from 'qrcode';
 import { jsPDF } from 'jspdf';
 import { Participant, HACKATHON_DETAILS } from '../data/participants';
+import { EVENT_IMAGE_DATA_URL } from '../assets/eventImage';
 
 export const GITHUB_PAGES_APP_URL = 'https://sarlayash.github.io/I-WILL-WIN---JU/';
 export const RUN_APP_URL = 'https://ais-pre-bp3ssrvehv2taassdxou3d-252756721792.asia-east1.run.app/';
@@ -156,6 +157,20 @@ export async function renderCertificateToCanvas(
   const theme = THEMES[themeKey] || THEMES['obsidian-gold'];
   const isDark = themeKey !== 'royal-ivory';
 
+  // Preload official event image
+  let eventImg: HTMLImageElement | null = null;
+  try {
+    eventImg = new Image();
+    await new Promise<void>((resolve) => {
+      if (!eventImg) return resolve();
+      eventImg.onload = () => resolve();
+      eventImg.onerror = () => resolve();
+      eventImg.src = EVENT_IMAGE_DATA_URL;
+    });
+  } catch (e) {
+    // continue
+  }
+
   // 1. Background Fill with subtle radial lighting
   const bgGrad = ctx.createRadialGradient(
     width / 2,
@@ -235,8 +250,8 @@ export async function renderCertificateToCanvas(
   ctx.fillText(microText.repeat(3), marginInner + 40, height - marginInner + 12);
   ctx.restore();
 
-  // 4. Header: Crest & Insignia
-  drawInsignia(ctx, width / 2, 195, isDark);
+  // 4. Header: Crest & Insignia with Official Event Emblem
+  drawInsignia(ctx, width / 2, 195, isDark, eventImg);
 
   // Institution title: JIET GROUP OF INSTITUTIONS, JODHPUR
   ctx.textAlign = 'center';
@@ -385,8 +400,8 @@ export async function renderCertificateToCanvas(
     console.error('Error drawing QR code', e);
   }
 
-  // Draw Official Gold Seal in the Center
-  drawOfficialGoldMedalSeal(ctx, width / 2, bottomY + 180, isDark);
+  // Draw Official Gold Seal in the Center with Official Event Key Visual
+  drawOfficialGoldMedalSeal(ctx, width / 2, bottomY + 180, isDark, eventImg);
 
   // Digital Authentication Box on the Right (No signatures requested)
   const rightBoxX = width - marginInner - boxW - 58;
@@ -450,48 +465,61 @@ function drawCornerAccents(
   ctx.restore();
 }
 
-function drawInsignia(ctx: CanvasRenderingContext2D, cx: number, cy: number, isDark: boolean) {
+function drawInsignia(
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  isDark: boolean,
+  eventImg?: HTMLImageElement | null
+) {
   ctx.save();
   ctx.translate(cx, cy);
 
-  // Gold shield / crest
-  ctx.beginPath();
-  ctx.moveTo(0, -42);
-  ctx.lineTo(34, -22);
-  ctx.lineTo(34, 15);
-  ctx.quadraticCurveTo(30, 44, 0, 52);
-  ctx.quadraticCurveTo(-30, 44, -34, 15);
-  ctx.lineTo(-34, -22);
-  ctx.closePath();
+  // Laurel branches left and right
+  drawLaurelBranch(ctx, -56, 4, -1);
+  drawLaurelBranch(ctx, 56, 4, 1);
 
-  const crestGrad = ctx.createLinearGradient(-34, -42, 34, 52);
+  // Outer circular gold medallion frame (radius 50)
+  const outerR = 50;
+  const crestGrad = ctx.createLinearGradient(-outerR, -outerR, outerR, outerR);
   crestGrad.addColorStop(0, '#FFE89E');
-  crestGrad.addColorStop(0.5, '#D4AF37');
+  crestGrad.addColorStop(0.3, '#F59E0B');
+  crestGrad.addColorStop(0.7, '#D4AF37');
   crestGrad.addColorStop(1, '#8C6718');
+
+  ctx.beginPath();
+  ctx.arc(0, 0, outerR, 0, Math.PI * 2);
   ctx.fillStyle = crestGrad;
   ctx.fill();
   ctx.strokeStyle = isDark ? '#FFF2C6' : '#6A4A0A';
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 3.5;
   ctx.stroke();
 
-  // Inner shield details
+  // Inner ring
   ctx.beginPath();
-  ctx.moveTo(0, -32);
-  ctx.lineTo(24, -16);
-  ctx.lineTo(24, 10);
-  ctx.quadraticCurveTo(20, 32, 0, 38);
-  ctx.quadraticCurveTo(-20, 32, -24, 10);
-  ctx.lineTo(-24, -16);
-  ctx.closePath();
-  ctx.fillStyle = isDark ? '#0F172A' : '#1E293B';
+  ctx.arc(0, 0, outerR - 4, 0, Math.PI * 2);
+  ctx.fillStyle = isDark ? '#090D16' : '#1E293B';
   ctx.fill();
 
-  // Star in crest
-  drawStar(ctx, 0, 6, 5, 14, 7, '#FCD34D');
+  // Draw event image inside circular badge
+  if (eventImg && eventImg.complete && eventImg.naturalWidth > 0) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(0, 0, outerR - 5, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(eventImg, -(outerR - 5), -(outerR - 5), (outerR - 5) * 2, (outerR - 5) * 2);
+    ctx.restore();
 
-  // Laurel branches left and right
-  drawLaurelBranch(ctx, -46, 6, -1);
-  drawLaurelBranch(ctx, 46, 6, 1);
+    // Subtle inner gold rim
+    ctx.beginPath();
+    ctx.arc(0, 0, outerR - 5, 0, Math.PI * 2);
+    ctx.strokeStyle = '#FCD34D';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  } else {
+    // Fallback gold star
+    drawStar(ctx, 0, 0, 5, 20, 10, '#FCD34D');
+  }
 
   ctx.restore();
 }
@@ -705,7 +733,8 @@ function drawOfficialGoldMedalSeal(
   ctx: CanvasRenderingContext2D,
   cx: number,
   cy: number,
-  isDark: boolean
+  isDark: boolean,
+  eventImg?: HTMLImageElement | null
 ) {
   ctx.save();
   ctx.translate(cx, cy);
@@ -791,16 +820,36 @@ function drawOfficialGoldMedalSeal(
   });
   ctx.restore();
 
-  // Center crest inside seal
-  drawStar(ctx, 0, -12, 5, 28, 13, '#FDE68A');
+  // Center crest inside seal: Embed Official Event Key Visual
+  if (eventImg && eventImg.complete && eventImg.naturalWidth > 0) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(0, -6, 52, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(eventImg, -52, -58, 104, 104);
+    ctx.restore();
 
-  ctx.fillStyle = '#FFFBEB';
-  ctx.font = '800 14px "Cinzel", serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('APPRECIATION', 0, 24);
+    ctx.beginPath();
+    ctx.arc(0, -6, 52, 0, Math.PI * 2);
+    ctx.strokeStyle = '#FCD34D';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
 
-  ctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('OFFICIAL SEAL', 0, 42);
+    ctx.fillStyle = '#FFFBEB';
+    ctx.font = '800 11px "Cinzel", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('APPRECIATION', 0, 56);
+  } else {
+    drawStar(ctx, 0, -12, 5, 28, 13, '#FDE68A');
+
+    ctx.fillStyle = '#FFFBEB';
+    ctx.font = '800 14px "Cinzel", serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('APPRECIATION', 0, 24);
+
+    ctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText('OFFICIAL SEAL', 0, 42);
+  }
 
   ctx.restore();
 }

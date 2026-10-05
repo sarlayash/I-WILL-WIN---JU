@@ -9,6 +9,7 @@ import {
   CertificateTheme,
   THEMES,
 } from '../utils/certificateGenerator';
+import { EVENT_IMAGE_DATA_URL } from '../assets/eventImage';
 import confetti from 'canvas-confetti';
 
 interface CertificateViewerProps {
@@ -221,6 +222,32 @@ export const CertificateViewer: React.FC<CertificateViewerProps> = ({
           </div>
 
         </div>
+      </div>
+
+      {/* Official Event Visual Integration Badge */}
+      <div className="mb-4 p-2.5 sm:p-3 rounded-xl bg-slate-900/80 border border-amber-500/20 flex items-center justify-between gap-3 flex-wrap">
+        <div className="flex items-center gap-2.5">
+          <img
+            src="./JIE_JU_IMAGE.png"
+            onError={(e) => {
+              e.currentTarget.src = EVENT_IMAGE_DATA_URL;
+            }}
+            alt="JIET Universe Official Visual"
+            className="w-8 h-8 rounded-lg border border-amber-400/50 object-cover shrink-0"
+            referrerPolicy="no-referrer"
+          />
+          <div>
+            <span className="text-xs font-semibold text-slate-200">
+              Official Event Key Visual Sealed
+            </span>
+            <span className="hidden sm:inline text-xs text-slate-400">
+              {' '}· Embedded in Top Crest & 3D Gold Medallion Seal
+            </span>
+          </div>
+        </div>
+        <span className="text-[11px] font-mono-code text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded-md border border-amber-500/30">
+          ★ AUTHENTIC EVENT ARTWORK
+        </span>
       </div>
 
       {/* Main Certificate Canvas Container */}
