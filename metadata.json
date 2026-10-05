@@ -1,0 +1,6 @@
+{
+  "name": "I WILL WIN - Hackathon Certificate Portal",
+  "description": "Official self-service elite certificate portal for the 56 Minds 1 Mission 12 Hours Hackathon at JIET Universe.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

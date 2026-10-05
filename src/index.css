@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+  }
+  .font-pinyon {
+    font-family: 'Pinyon Script', cursive;
+  }
+  .font-greatvibes {
+    font-family: 'Great Vibes', cursive;
+  }
+  .font-mono-code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Certificate gold gradient text & borders */
+.gold-text-gradient {
+  background: linear-gradient(135deg, #FFE29F 0%, #FFAE34 50%, #EDC967 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border-gradient {
+  border-image: linear-gradient(135deg, #F3E7BE 0%, #D4AF37 30%, #AA771C 70%, #F5D77F 100%) 1;
+}
+
+.gold-badge-shimmer {
+  background: radial-gradient(circle at 30% 30%, #FFE8A3 0%, #D4AF37 55%, #8B6508 100%);
+}
+
+@media print {
+  body {
+    background: transparent !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
