@@ -15,16 +15,41 @@ export default function App() {
   const [urlVerifyId, setUrlVerifyId] = useState<string>('');
   const [scannedParticipant, setScannedParticipant] = useState<Participant | null>(null);
 
-  // Handle URL query parameters (?verify=ID or ?name=Name)
+  // Handle URL query parameters (?verify=ID or ?name=Name) and hash routing (#verify=ID or #ID)
   useEffect(() => {
     try {
-      const params = new URLSearchParams(window.location.search);
-      const verifyParam = params.get('verify') || params.get('id');
-      const nameParam = params.get('name');
+      // 1. Check if 404.html saved a redirected path
+      const redirectPath = sessionStorage.getItem('redirect');
+      if (redirectPath) {
+        sessionStorage.removeItem('redirect');
+        try {
+          window.history.replaceState(null, '', redirectPath);
+        } catch (err) {
+          // ignore
+        }
+      }
 
-      if (verifyParam) {
-        setUrlVerifyId(verifyParam);
-        const match = getParticipantById(verifyParam);
+      const searchParams = new URLSearchParams(window.location.search);
+      let verifyTarget = searchParams.get('verify') || searchParams.get('id');
+      const nameTarget = searchParams.get('name');
+
+      // 2. Check hash parameters (e.g. #verify=... or #IWW-2026-JIET-001)
+      if (!verifyTarget && window.location.hash) {
+        const hash = window.location.hash.replace(/^#\/?/, '');
+        if (hash.startsWith('verify=')) {
+          verifyTarget = decodeURIComponent(hash.split('verify=')[1]);
+        } else if (hash.startsWith('IWW-2026-JIET-')) {
+          verifyTarget = decodeURIComponent(hash);
+        } else {
+          const hashParams = new URLSearchParams(hash);
+          verifyTarget = hashParams.get('verify') || hashParams.get('id');
+        }
+      }
+
+      if (verifyTarget) {
+        const cleanedId = verifyTarget.trim();
+        setUrlVerifyId(cleanedId);
+        const match = getParticipantById(cleanedId);
         if (match) {
           setSelectedParticipant(match);
           setScannedParticipant(match);
@@ -32,8 +57,8 @@ export default function App() {
         } else {
           setActiveTab('verify');
         }
-      } else if (nameParam) {
-        const match = findParticipant(nameParam);
+      } else if (nameTarget) {
+        const match = findParticipant(nameTarget);
         if (match) {
           setSelectedParticipant(match);
           setActiveTab('claim');

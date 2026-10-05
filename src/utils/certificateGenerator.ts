@@ -2,21 +2,33 @@ import QRCode from 'qrcode';
 import { jsPDF } from 'jspdf';
 import { Participant, HACKATHON_DETAILS } from '../data/participants';
 
-export const PRODUCTION_APP_URL = 'https://ais-pre-bp3ssrvehv2taassdxou3d-252756721792.asia-east1.run.app';
+export const GITHUB_PAGES_APP_URL = 'https://sarlayash.github.io/I-WILL-WIN---JU/';
+export const RUN_APP_URL = 'https://ais-pre-bp3ssrvehv2taassdxou3d-252756721792.asia-east1.run.app/';
 
 export function getPublicVerificationUrl(participantId: string): string {
   try {
-    if (typeof window !== 'undefined' && window.location && window.location.origin) {
-      const origin = window.location.origin;
-      // If we are already on a public live domain (not localhost, 127.0.0.1, or sandboxed file)
-      if (!origin.includes('localhost') && !origin.includes('127.0.0.1') && origin.startsWith('http')) {
-        return `${origin}?verify=${participantId}`;
+    if (typeof window !== 'undefined' && window.location) {
+      const href = window.location.href;
+      // If we are currently running on a public website (not localhost, 127.0.0.1, or sandboxed file)
+      if (window.location.origin && !window.location.origin.includes('localhost') && !window.location.origin.includes('127.0.0.1') && window.location.origin.startsWith('http')) {
+        const url = new URL(href);
+        url.search = '';
+        url.hash = '';
+        let cleanBase = url.toString();
+        // Remove index.html if present
+        cleanBase = cleanBase.replace(/\/index\.html\/?$/, '');
+        if (!cleanBase.endsWith('/')) {
+          cleanBase += '/';
+        }
+        return `${cleanBase}?verify=${encodeURIComponent(participantId)}`;
       }
     }
   } catch (e) {
     // fallback
   }
-  return `${PRODUCTION_APP_URL}?verify=${participantId}`;
+
+  // Canonical fallback to official GitHub Pages repository URL
+  return `${GITHUB_PAGES_APP_URL}?verify=${encodeURIComponent(participantId)}`;
 }
 
 export type CertificateTheme = 'obsidian-gold' | 'royal-ivory' | 'prestige-navy';
