@@ -95,7 +95,7 @@ export const SearchClaimBox: React.FC<SearchClaimBoxProps> = ({
           </div>
 
           <h1 className="font-cinzel text-2xl sm:text-4xl font-bold tracking-wide text-slate-100 mb-3">
-            Claim Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500">Elite Certificate</span>
+            Claim Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500">Certificate of Appreciation</span>
           </h1>
 
           <p className="text-sm sm:text-base text-slate-400 leading-relaxed">

@@ -202,7 +202,7 @@ export async function renderCertificateToCanvas(
   ctx.fillStyle = isDark ? 'rgba(212, 175, 55, 0.35)' : 'rgba(133, 94, 18, 0.45)';
   ctx.font = '10px "JetBrains Mono", monospace';
   ctx.letterSpacing = '3px';
-  const microText = '★ JIET GROUP OF UNIVERSE ★ 12 HOURS HACKATHON ★ 56 MINDS 1 MISSION ★ BUILD IN PUBLIC ★ OCT 1-2 2026 ★ OFFICIAL VERIFIED CREDENTIAL ★ ';
+  const microText = '★ POWERED BY KAPIL ★ CO-POWERED BY JIET UNIVERSE ★ 12 HOURS HACKATHON ★ 56 MINDS 1 MISSION ★ BUILD IN PUBLIC ★ OCT 1-2 2026 ★ ';
   ctx.fillText(microText.repeat(3), marginInner + 40, marginInner - 5);
   ctx.fillText(microText.repeat(3), marginInner + 40, height - marginInner + 12);
   ctx.restore();
@@ -217,10 +217,10 @@ export async function renderCertificateToCanvas(
   ctx.letterSpacing = '6px';
   ctx.fillText('JIET GROUP OF UNIVERSE', width / 2, 255);
 
-  ctx.fillStyle = isDark ? '#9CA3AF' : '#64748B';
-  ctx.font = '500 16px "Plus Jakarta Sans", sans-serif';
+  ctx.fillStyle = isDark ? '#F59E0B' : '#B45309';
+  ctx.font = '600 17px "Plus Jakarta Sans", sans-serif';
   ctx.letterSpacing = '3px';
-  ctx.fillText('POWERED BY JIET UNIVERSE & KAPIL - KNOWLEDGE MULTIVERSE ARCHITECT', width / 2, 286);
+  ctx.fillText('POWERED BY KAPIL · CO-POWERED BY JIET UNIVERSE', width / 2, 286);
 
   // Horizontal divider with star
   drawDivider(ctx, width / 2, 316, 520, outerBorderGrad);
@@ -241,13 +241,13 @@ export async function renderCertificateToCanvas(
 
   ctx.fillStyle = titleGrad;
   ctx.font = '800 58px "Cinzel", serif';
-  ctx.letterSpacing = '8px';
-  ctx.fillText('CERTIFICATE OF EXCELLENCE', width / 2, 386);
+  ctx.letterSpacing = '6px';
+  ctx.fillText('CERTIFICATE OF APPRECIATION', width / 2, 386);
 
   ctx.fillStyle = isDark ? '#94A3B8' : '#475569';
-  ctx.font = '700 20px "Cinzel", serif';
-  ctx.letterSpacing = '10px';
-  ctx.fillText('ELITE BUILDER & VISIONARY INNOVATION RECOGNITION', width / 2, 425);
+  ctx.font = '700 19px "Cinzel", serif';
+  ctx.letterSpacing = '8px';
+  ctx.fillText('HONORING INNOVATION, EXCELLENCE & DEDICATION', width / 2, 425);
   ctx.restore();
 
   // 6. Hackathon Badge Banner
@@ -347,8 +347,8 @@ export async function renderCertificateToCanvas(
   // Draw Official Gold Seal in the Center
   drawOfficialGoldMedalSeal(ctx, width / 2, bottomY + 180, isDark);
 
-  // Draw Signatures on the Right
-  drawSignatures(ctx, width - 680, bottomY, isDark, outerBorderGrad);
+  // Digital Authentication Box on the Right (No signatures requested)
+  drawDigitalAuthenticationBlock(ctx, width - 660, bottomY, participant, isDark, outerBorderGrad);
 
   // 12. Bottom Security Meta Footer
   ctx.save();
@@ -718,7 +718,7 @@ function drawOfficialGoldMedalSeal(
   ctx.fillStyle = '#FEF3C7';
   ctx.font = '700 9px "JetBrains Mono", monospace';
   ctx.textAlign = 'center';
-  const sealText = '★ JIET UNIVERSE ★ 56 MINDS ★ BUILD IN PUBLIC ★ 2026 ';
+  const sealText = '★ POWERED BY KAPIL ★ CO-POWERED BY JIET UNIVERSE ★ 56 MINDS ★ 2026 ';
   const chars = sealText.split('');
   const arcStep = (Math.PI * 2) / chars.length;
   chars.forEach((char, index) => {
@@ -733,119 +733,88 @@ function drawOfficialGoldMedalSeal(
   drawStar(ctx, 0, -8, 5, 24, 11, '#FDE68A');
 
   ctx.fillStyle = '#FFFBEB';
-  ctx.font = '800 13px "Cinzel", serif';
+  ctx.font = '800 12px "Cinzel", serif';
   ctx.textAlign = 'center';
-  ctx.fillText('ELITE', 0, 20);
+  ctx.fillText('APPRECIATION', 0, 19);
 
-  ctx.font = '700 10px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('OFFICIAL', 0, 34);
+  ctx.font = '700 9px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('OFFICIAL', 0, 33);
 
   ctx.restore();
 }
 
-function drawSignatures(
-  ctx: CanvasRenderingContext2D,
-  startX: number,
-  y: number,
-  isDark: boolean,
-  borderGrad: CanvasGradient | string
-) {
-  // Signatory 1: Kapil - Knowledge Multiverse Architect
-  const sig1X = startX - 10;
-  drawSingleSignature(
-    ctx,
-    sig1X,
-    y,
-    'Kapil',
-    'Knowledge Multiverse Architect',
-    'Hackathon Convener & Lead Mentor',
-    isDark,
-    borderGrad
-  );
-
-  // Signatory 2: JIET Universe Director / Patron
-  const sig2X = startX + 330;
-  drawSingleSignature(
-    ctx,
-    sig2X,
-    y,
-    'JIET Universe',
-    'Director of Innovation & Technology',
-    'JIET Group Of Universe',
-    isDark,
-    borderGrad,
-    true
-  );
-}
-
-function drawSingleSignature(
+function drawDigitalAuthenticationBlock(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  sigName: string,
-  title: string,
-  subtitle: string,
+  participant: Participant,
   isDark: boolean,
-  borderGrad: CanvasGradient | string,
-  isDirector = false
+  borderGrad: CanvasGradient | string
 ) {
+  const boxW = 440;
+  const boxH = 320;
+
   ctx.save();
-  ctx.translate(x, y);
-
-  // Artistic script signature representation
-  ctx.save();
-  if (isDirector) {
-    ctx.strokeStyle = isDark ? '#E2E8F0' : '#0F172A';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(30, 95);
-    ctx.bezierCurveTo(60, 40, 90, 110, 130, 60);
-    ctx.bezierCurveTo(160, 20, 190, 80, 220, 65);
-    ctx.bezierCurveTo(240, 50, 250, 85, 270, 75);
-    ctx.stroke();
-
-    ctx.fillStyle = isDark ? '#CBD5E1' : '#1E293B';
-    ctx.font = '36px "Great Vibes", cursive';
-    ctx.fillText('Director JIET', 50, 85);
-  } else {
-    ctx.strokeStyle = isDark ? '#FDE68A' : '#78350F';
-    ctx.lineWidth = 3.5;
-    ctx.beginPath();
-    ctx.moveTo(25, 90);
-    ctx.bezierCurveTo(55, 30, 95, 115, 140, 55);
-    ctx.bezierCurveTo(170, 15, 210, 85, 250, 60);
-    ctx.bezierCurveTo(265, 45, 280, 80, 290, 70);
-    ctx.stroke();
-
-    ctx.fillStyle = isDark ? '#FEF08A' : '#854D0E';
-    ctx.font = '44px "Great Vibes", cursive';
-    ctx.fillText('Kapil Narula', 45, 80);
-  }
-  ctx.restore();
-
-  // Signature line
+  ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.85)' : 'rgba(255, 255, 255, 0.95)';
   ctx.strokeStyle = borderGrad;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(10, 125);
-  ctx.lineTo(290, 125);
+  ctx.lineWidth = 1.5;
+  roundRect(ctx, x, y, boxW, boxH, 12);
+  ctx.fill();
   ctx.stroke();
 
-  // Name & titles
+  // Content inside block
   ctx.textAlign = 'center';
-  ctx.fillStyle = isDark ? '#FFFFFF' : '#0F172A';
-  ctx.font = '700 18px "Cinzel", serif';
-  ctx.letterSpacing = '1px';
-  ctx.fillText(sigName.toUpperCase(), 150, 155);
+  const cx = x + boxW / 2;
+
+  // Badge icon/star
+  drawStar(ctx, cx, y + 36, 5, 12, 6, '#F59E0B');
 
   ctx.fillStyle = isDark ? '#F59E0B' : '#B45309';
-  ctx.font = '600 13px "Plus Jakarta Sans", sans-serif';
-  ctx.letterSpacing = '0.5px';
-  ctx.fillText(title, 150, 178);
+  ctx.font = '700 13px "JetBrains Mono", monospace';
+  ctx.letterSpacing = '2px';
+  ctx.fillText('DIGITAL ACCREDITATION', cx, y + 68);
 
   ctx.fillStyle = isDark ? '#94A3B8' : '#64748B';
-  ctx.font = '500 12px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText(subtitle, 150, 198);
+  ctx.font = '500 11px "Plus Jakarta Sans", sans-serif';
+  ctx.letterSpacing = '1px';
+  ctx.fillText('NO PHYSICAL SIGNATURE REQUIRED', cx, y + 88);
+
+  // Line divider
+  ctx.strokeStyle = isDark ? 'rgba(212, 175, 55, 0.3)' : 'rgba(133, 94, 18, 0.3)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x + 40, y + 104);
+  ctx.lineTo(x + boxW - 40, y + 104);
+  ctx.stroke();
+
+  // Powered By Kapil
+  ctx.fillStyle = isDark ? '#94A3B8' : '#64748B';
+  ctx.font = '500 11px "JetBrains Mono", monospace';
+  ctx.fillText('PRIMARY CONVENER & LEAD', cx, y + 128);
+
+  ctx.fillStyle = isDark ? '#FDE68A' : '#78350F';
+  ctx.font = '800 20px "Cinzel", serif';
+  ctx.letterSpacing = '1px';
+  ctx.fillText('POWERED BY KAPIL', cx, y + 154);
+
+  // Co-Powered By JIET Universe
+  ctx.fillStyle = isDark ? '#94A3B8' : '#64748B';
+  ctx.font = '500 11px "JetBrains Mono", monospace';
+  ctx.fillText('INSTITUTIONAL HOST', cx, y + 188);
+
+  ctx.fillStyle = isDark ? '#FFFFFF' : '#0F172A';
+  ctx.font = '700 17px "Cinzel", serif';
+  ctx.letterSpacing = '1px';
+  ctx.fillText('CO-POWERED BY JIET UNIVERSE', cx, y + 212);
+
+  // Bottom verification stamp note
+  ctx.fillStyle = isDark ? '#38BDF8' : '#0284C7';
+  ctx.font = '600 11px "JetBrains Mono", monospace';
+  ctx.fillText('SECURE DIGITAL RECORD VERIFIED', cx, y + 252);
+
+  ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
+  ctx.font = '500 11px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('Authorized directly under the 56 Minds Official Registry', cx, y + 276);
 
   ctx.restore();
 }

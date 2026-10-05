@@ -130,9 +130,9 @@ export const VerifierModal: React.FC<VerifierModalProps> = ({
               <div className="flex items-start gap-2.5 text-slate-300 sm:col-span-2">
                 <User className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-slate-500 text-[11px]">POWERED BY & CONVENER</div>
+                  <div className="text-slate-500 text-[11px]">ACCREDITATION & ORGANIZERS</div>
                   <div className="font-semibold text-slate-200">
-                    JIET UNIVERSE & Kapil - Knowledge Multiverse Architect
+                    Powered By Kapil · Co-Powered By JIET Universe
                   </div>
                 </div>
               </div>

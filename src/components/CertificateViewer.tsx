@@ -90,7 +90,7 @@ export const CertificateViewer: React.FC<CertificateViewerProps> = ({
   };
 
   const handleShareLinkedIn = () => {
-    const text = `Honored to receive the Elite Certificate of Achievement for "I WILL WIN | 12 HOURS HACKATHON" (56 Minds | 1 Mission | Build in Public) at JIET Group Of Universe, powered by JIET Universe & Kapil - Knowledge Multiverse Architect! 🚀 Proud to build & ship in public with 56 visionary minds! #IWillWin #JIETUniverse #BuildInPublic #Hackathon2026`;
+    const text = `Honored to receive the Certificate of Appreciation for "I WILL WIN | 12 HOURS HACKATHON" (56 Minds | 1 Mission | Build in Public) at JIET Group Of Universe, Powered By Kapil Co-Powered By JIET Universe! 🚀 Proud to build & ship in public with 56 visionary minds! #IWillWin #BuildInPublic #Hackathon2026`;
     const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
       verificationUrl
     )}&summary=${encodeURIComponent(text)}`;

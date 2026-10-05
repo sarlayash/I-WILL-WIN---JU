@@ -29,7 +29,7 @@ export const CohortDirectory: React.FC<CohortDirectoryProps> = ({ onSelectPartic
           The 56 Minds Cohort
         </h2>
         <p className="text-sm text-slate-400 max-w-2xl mx-auto">
-          These are the authorized 56 builders who participated in the 12-Hour Non-Stop Hackathon on October 1–2, 2026 at JIET Group of Universe under the mentorship of Kapil - Knowledge Multiverse Architect.
+          These are the authorized 56 builders who participated in the 12-Hour Non-Stop Hackathon on October 1–2, 2026. Powered By Kapil Co-Powered By JIET Universe.
         </p>
 
         {/* Filter bar */}

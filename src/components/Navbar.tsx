@@ -37,9 +37,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
               </div>
               <div className="text-xs text-slate-400 flex items-center gap-1.5 flex-wrap">
-                <span className="text-slate-300 font-medium">JIET UNIVERSE</span>
+                <span className="text-amber-300 font-medium">Powered By Kapil</span>
                 <span className="text-slate-600">·</span>
-                <span className="text-amber-300/80">Kapil - Multiverse Architect</span>
+                <span className="text-slate-300">Co-Powered By JIET Universe</span>
               </div>
             </div>
           </div>

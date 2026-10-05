@@ -24,9 +24,9 @@ export const EventHighlights: React.FC = () => {
     },
     {
       icon: ShieldCheck,
-      label: 'JIET Universe',
-      value: 'QR Verified',
-      desc: 'Powered by Kapil - Multiverse Architect',
+      label: 'QR Verified',
+      value: 'Authentic Record',
+      desc: 'Powered By Kapil Co-Powered By JIET Universe',
     },
   ];
 
@@ -51,12 +51,12 @@ export const EventHighlights: React.FC = () => {
 
           <div className="text-left md:text-right">
             <div className="text-xs text-slate-500 font-mono-code uppercase tracking-wider">
-              Lead Architect & Convener
+              PRIMARY ACCREDITATION
             </div>
             <div className="text-sm font-semibold text-amber-300 font-cinzel">
-              Kapil - Knowledge Multiverse Architect
+              Powered By Kapil
             </div>
-            <div className="text-xs text-slate-400">Powered by JIET UNIVERSE</div>
+            <div className="text-xs text-slate-400">Co-Powered By JIET Universe</div>
           </div>
         </div>
 
